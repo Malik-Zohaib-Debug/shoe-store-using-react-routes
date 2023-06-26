@@ -1,4 +1,5 @@
-import React, {useState, useContext, createContext} from "react";
+import React, {useContext, createContext} from "react";
+
 
 const state = {
     products: [
@@ -65,9 +66,16 @@ const state = {
     ]
 }
 
-const GlobalContext = createContext(state);
+export const GlobalContext = createContext(state);
 
-const [cart, setCart] = useState([]);
+// const [cart, setCart] = useState([]);
 
-const [total, setTotal] = useState(0);
+// const [total, setTotal] = useState(0);
 
+export const GlobalProvider = ( {children} ) => {
+    return(<GlobalContext.Provider value={{
+        products: state.products
+    }}>
+        { children }
+    </GlobalContext.Provider>)
+}
