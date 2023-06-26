@@ -1,7 +1,7 @@
-import React, {useContext, createContext} from "react";
+import React, {useState, createContext, useReducer} from "react";
+import AppReducer from "./GlobalReducer";
 
-
-const state = {
+const initialState = {
     products: [
         {
             "_id": "1",
@@ -63,18 +63,61 @@ const state = {
             "colors": ["orange", "black", "crimson", "teal"],
             "count": 1
         }
-    ]
+    ],
+    cart: [], 
+    total: 0
 }
 
-export const GlobalContext = createContext(state);
-
-// const [cart, setCart] = useState([]);
-
-// const [total, setTotal] = useState(0);
+export const GlobalContext = createContext(initialState);
 
 export const GlobalProvider = ( {children} ) => {
+
+    const [state, dispatch] = useReducer(AppReducer, initialState);
+
+    function addCart(id){
+        dispatch({
+            type: "ADD_CART",
+            payload: id
+        })
+    };
+
+    function reduceItem(id){
+        dispatch({
+            type: 'REDUCTION',
+            payload: id
+        })
+    };
+
+    function increaseItem(id){
+        dispatch({
+            type: "INCREASE",
+            payload: id
+        })
+    };
+
+    function removeProduct(id){
+        dispatch({
+            type: "REMOVE_PRODUCT",
+            payload: id
+        })
+    };
+
+    function calculateTotal(id){
+        dispatch({
+            type: "GET_TOTAL",
+            payload: id
+        })
+    };
+
     return(<GlobalContext.Provider value={{
-        products: state.products
+        products: state.products,
+        cart: state.cart,
+        total:state.total,
+        addCart,
+        reduceItem,
+        increaseItem,
+        removeProduct,
+        calculateTotal
     }}>
         { children }
     </GlobalContext.Provider>)
