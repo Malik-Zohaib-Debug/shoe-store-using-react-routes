@@ -7,8 +7,6 @@ export default function Product(){
 
     const {products} = useContext(GlobalContext);
 
-    console.log(products);
-
     return(
         <div id="product">
             {

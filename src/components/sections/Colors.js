@@ -1,9 +1,14 @@
 import React from "react";
 
-export default function Colors(){
+export default function Colors( {colors} ){
+ 
     return(
-        <div>
-            Colors
+        <div className="colors">
+            {
+                colors.map((color, index) => (
+                    <button key={index} style={{background: color}}>0</button>
+                ))
+            }
         </div>
     );
 }
