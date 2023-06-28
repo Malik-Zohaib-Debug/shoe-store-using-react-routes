@@ -19,24 +19,51 @@ const AppReducer = (state, action) => {
         
         case 'REMOVE_PRODUCT':
             const removeID = action.payload;
-            const updatedCartRemove = state.cart.filer(item => item._id !== removeID); 
+            const updatedCartRemove = state.cart.filter(item => item._id !== removeID); 
             return{
                 ...state,
                 cart: updatedCartRemove
             };
 
-        case 'REDUCTION':
+        case 'REDUCTION': 
+            const reductionID = action.payload;
+            const updatedCartReduction = state.cart.map(item => {
+                if(item._id === reductionID){
+                    return{
+                        ...item,
+                        count: item.count === 1 ? 1 : item.count - 1
+                    };
+                }
+                return item;
+            })
             return{
-
+                ...state,
+                cart: updatedCartReduction
             }
         case 'INCREASE':
-            return{
-
-            }
+            const increaseId = action.payload.id;
+            const updatedCartIncrease = state.cart.map(item => {
+                if (item._id === increaseId) {
+                return {
+                    ...item,
+                    count: item.count + 1
+                    };
+                }
+                return item;
+            });
+            return {
+                ...state,
+                cart: updatedCartIncrease
+            };
         case 'GET_TOTAL':
-            return{
+            const total = state.cart.reduce((prev, item) => {
+                return prev + item.price * item.count;
+            }, 0);
+            return {
+                ...state,
+                total: total
+            };
 
-            }
         default:
             return state;
     }
