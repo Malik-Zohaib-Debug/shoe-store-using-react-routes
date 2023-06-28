@@ -1,11 +1,14 @@
-import React, {useState} from "react";
+import React, {useState, useContext, createRef} from "react";
 import Menu from './svg/bars-solid.svg';
 import Close from './svg/xmark-solid.svg';
 import CartIcon from './svg/cart-shopping-solid.svg';
 import { Link } from "react-router-dom";
+import { GlobalContext } from "./GlobalState/GlobalContext";
 import './css/Header.css';
 
 const Header = () => {
+
+    const {cart} = useContext(GlobalContext);
 
     const [toggle, setToggle] = useState(false);
 
@@ -32,7 +35,7 @@ const Header = () => {
                     <li className="close" onClick={menuToggle}><img src={Close} alt="close" /></li>
                 </ul>
                 <div className="nav-cart">
-                    <span></span>
+                    <span>{cart.length}</span>
                     <Link to="/cart"><img src={CartIcon} alt="cart" width="20"/></Link>
                 </div>
             </nav>
