@@ -10,7 +10,7 @@ const Header = () => {
 
     const {cart} = useContext(GlobalContext);
 
-    const [toggle, setToggle] = useState(false);
+    const [toggle, setToggle] = useState(false)
 
     const menuToggle = () => {
         setToggle(!toggle);
